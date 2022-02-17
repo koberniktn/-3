@@ -11,6 +11,7 @@ def transformation(dictionary):
     equation = equation.replace("=", " = ")
     print("Преобразованный вариант:", equation)
 
+
 def coun(dictionary, buff, sign):
     import re 
     res = re.findall(r'x\^?\d?', buff) 
@@ -36,13 +37,6 @@ def coun(dictionary, buff, sign):
     dictionary[key] += num
     return dictionary
 
-def tyt(equation, dictionary, buff, sign):
-    buff = equation[i:j]
-    dictionary = coun(dictionary, buff, sign)
-    if dictionary == 0:
-        return 0
-
-#def splitting(equation, dictionary):dgdhsdh
 
 def select_dictionary(equation):
     print(equation)
@@ -105,7 +99,8 @@ def select_dictionary(equation):
                 return 0
     transformation(dictionary)
     return dictionary
-       
+
+
 def counter(a, b, c):
     D = b**2 - 4*a*c
     if D >= 0:
@@ -117,6 +112,7 @@ def counter(a, b, c):
         buff = complex(int(-b/(2*a)), int(D**(1/2)/(2*a)))
         res = [buff, buff.conjugate()]
     return res
+
 
 def reform(equation): #работает (за искл зелененького)  16.02.22
     import re
@@ -143,6 +139,7 @@ def reform(equation): #работает (за искл зелененького)
         return 0
     return equation
 
+
 def function():
     equation = input("Давайте уравнение: ")
     equation = reform(equation)
@@ -157,6 +154,7 @@ def function():
             else:
                 res = counter(a, b, c)
                 print('Ответ:', res, '\n(все значения округлены до целого, не пугайтесь)')
+
 
 function()
 
