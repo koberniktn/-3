@@ -1,3 +1,5 @@
+import re
+
 def transformation(dictionary):
     for key in dictionary:
         if dictionary[key] >= 0:
@@ -101,7 +103,7 @@ def select_dictionary(equation):
     return dictionary
 
 
-def counter(a, b, c):
+def solve_equation(a, b, c):
     D = b**2 - 4*a*c
     if D >= 0:
         res = [int((-b + D**(1/2))/(2*a)), int((-b - D**(1/2))/(2*a))]
@@ -114,47 +116,27 @@ def counter(a, b, c):
     return res
 
 
-def reform(equation): #работает (за искл зелененького)  16.02.22
-    import re
-    equation = equation.replace(" ", "")
-    #if re.findall(r'[!-@]', equation): -------любой символ из скобок. как?
-        #print("Вы использовали запрёщённые символы. Простите (")
-       # return 0
-    counter = 0
-    for i in range(0, len(equation)):
-        if equation[i].isalpha() and equation[i] != 'x':
-            print('МОя знать только буква x. Другие буква я не знать (Ж')
-            return 0
-        if equation[i] == '=':
-            counter += 1
-            if i == len(equation):
-                print('После знака равенства не должно быть пусто(')
-                return 0
-            j = i
-    if counter == 0:
-        print('Что за уравнение без знака равенства? (:')
-        return 0
-    if counter > 1:
-        print('Кажется, вы перебрали со знаками равенства (:')
-        return 0
-    return equation
+def check_equation(equation):
+    return re.fullmatch(r'[x\-+*\\0-9^]+=[x\-+*\\0-9]+', equation) is not None
 
 
 def function():
     equation = input("Давайте уравнение: ")
-    equation = reform(equation)
-    if equation != 0:
-        dictionary = select_dictionary(equation)
-        if dictionary != 0:
-            a = int(dictionary["x^2"])
-            b = int(dictionary["x"])
-            c = int(dictionary["x^0"])
-            if a == 0:
-                print('Кажется, уравнение не квадратное')
-            else:
-                res = counter(a, b, c)
-                print('Ответ:', res, '\n(все значения округлены до целого, не пугайтесь)')
+    equation = equation.replace(' ', '')
+    if check_equation(equation):
+        print('Уравнение неправильное')
+        return
+    dictionary = select_dictionary(equation)
+    if dictionary != 0:
+        a = int(dictionary["x^2"])
+        b = int(dictionary["x"])
+        c = int(dictionary["x^0"])
+        if a == 0:
+            print('Кажется, уравнение не квадратное')
+        else:
+            res = solve_equation(a, b, c)
+            print('Ответ:', res, '\n(все значения округлены до целого, не пугайтесь)')
 
 
-function()
-
+if __name__ == '__main__':
+    function()
